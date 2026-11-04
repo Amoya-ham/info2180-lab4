@@ -1,16 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
   var button = document.getElementById("search-btn");
+  var input = document.getElementById("search-input");
+  var result = document.getElementById("result");
 
   button.addEventListener("click", function () {
-    fetch("superheroes.php")
+    var query = input.value.trim();
+
+    fetch("superheroes.php?query=" + encodeURIComponent(query))
       .then(function (response) {
         return response.text();
       })
       .then(function (data) {
-        alert(data);
+        result.innerHTML = data;
       })
       .catch(function (error) {
-        alert("Something went wrong: " + error);
+        result.innerHTML = "<p class='not-found'>Something went wrong.</p>";
       });
   });
 });
